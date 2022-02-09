@@ -13,8 +13,9 @@ app.use(morgan('dev'));
 
 
 //internal imports
-const userRouter = require('./routers/usersRouter')
-// const adminRouter = require('./routers/adminRouter')
+const userRouter = require('./routers/usersRouter');
+const productsRouter = require('./routers/productsRouter');
+const packagesRouter = require('./routers/packagesRouter')
 
 
 app.get('/', async (req, res, next) => {
@@ -22,7 +23,8 @@ app.get('/', async (req, res, next) => {
 });
 
 app.use('/users', userRouter)
-// app.use('/admin', adminRouter)
+app.use('/products', productsRouter)
+app.use('/packages', packagesRouter)
 
 app.use((req, res, next) => {
   next(createError.NotFound());

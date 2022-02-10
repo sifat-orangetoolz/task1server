@@ -5,6 +5,7 @@ const createError = require("http-errors");
 
 // create main Model
 const User = db.users
+const Billing = db.billings
 
 
 
@@ -85,6 +86,26 @@ async function Login(req, res, next) {
   }
 }
 
+async function getUserBilling(req, res, next){
+  try {
+    const { userId } = req.params;
+    
+    const data = await User.findOne({
+      include: [{
+          model: Billing,
+          as: 'billing'
+      }],
+      where: { id: Number(userId) }
+  })
+
+  res.status(200).send(data);
+  console.log(data)
+    
+  } catch (error) {
+      next(error)
+  }
+}
+
 
 
 
@@ -92,5 +113,6 @@ module.exports = {
     getUsers,
     addUser,
     Login,
+    getUserBilling,
 }
   

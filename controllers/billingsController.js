@@ -8,7 +8,8 @@ const Billing = db.billings
 //Add product
 async function addBilling(req, res, next) {
     try {
-        const billing = await Billing.create(req.body)
+        const billing = await Billing.create(req.body);
+
         res.status(200).json(billing)
         console.log(billing) 
     } catch (error) {

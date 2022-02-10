@@ -6,16 +6,20 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         email: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         password: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            allowNull: false
         },
         balance: {
-            type: DataTypes.DOUBLE
+            type: DataTypes.DOUBLE,
+            allowNull: false,
         },
         validity_of_balance: {
-            type: DataTypes.DOUBLE
+            type: DataTypes.DOUBLE,
+            allowNull: false,
         }, 
     
     }, {

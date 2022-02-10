@@ -37,6 +37,7 @@ db.sequelize = sequelize
 db.users = require('./userModel.js')(sequelize, DataTypes)
 db.products = require('./productModel.js')(sequelize, DataTypes)
 db.packages = require('./packageModel.js')(sequelize, DataTypes)
+db.billings = require('./billingModel.js')(sequelize, DataTypes)
 
 db.sequelize.sync({ force: false })
 .then(() => {
@@ -45,17 +46,41 @@ db.sequelize.sync({ force: false })
 
 
 
-// 1 to Many Relation
+// 1 to Many Relation users vs billing
 
-// db.products.hasMany(db.reviews, {
-//     foreignKey: 'product_id',
-//     as: 'review'
-// })
+db.users.hasMany(db.billings, {
+    foreignKey: 'user_id',
+    as: 'billing'
+})
 
-// db.reviews.belongsTo(db.products, {
-//     foreignKey: 'product_id',
-//     as: 'product'
-// })
+db.billings.belongsTo(db.users, {
+    foreignKey: 'user_id',
+    as: 'user'
+})
+
+// 1 to Many Relation products vs billing
+
+db.products.hasMany(db.billings, {
+    foreignKey: 'product_id',
+    as: 'billing'
+})
+
+db.billings.belongsTo(db.products, {
+    foreignKey: 'product_id',
+    as: 'product'
+})
+
+// 1 to Many Relation packages vs billing
+
+db.packages.hasMany(db.billings, {
+    foreignKey: 'package_id',
+    as: 'billing'
+})
+
+db.billings.belongsTo(db.products, {
+    foreignKey: 'package_id',
+    as: 'package'
+})
 
 
 

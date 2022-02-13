@@ -10,12 +10,11 @@ const Billing = db.billings
 
 
 //Registration of o new user
-async function getUsers(req, res, next) {
+async function getUserById(req, res, next) {
     try {
-      let users = await User.findAll({})
-      res.status(200).json(users)
-
-      console.log(users)   
+      const { id } = req.params;
+      let user = await User.findOne({where: {id: id}})
+      res.status(200).json(user) 
     } catch (error) {
       next(error);
     }
@@ -110,7 +109,7 @@ async function getUserBilling(req, res, next){
 
 
 module.exports = {
-    getUsers,
+    getUserById,
     addUser,
     Login,
     getUserBilling,

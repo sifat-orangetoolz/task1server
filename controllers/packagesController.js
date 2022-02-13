@@ -10,7 +10,6 @@ async function addPackage(req, res, next) {
     try {
         const package = await Package.create(req.body)
         res.status(200).json(package)
-        console.log(package) 
     } catch (error) {
       next(error);
     }

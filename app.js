@@ -17,6 +17,7 @@ const userRouter = require('./routers/usersRouter');
 const productsRouter = require('./routers/productsRouter');
 const packagesRouter = require('./routers/packagesRouter');
 const billingsRouter = require('./routers/billingsRouter');
+const paymentRouter = require('./routers/paymentRouter');
 
 
 app.get('/', async (req, res, next) => {
@@ -27,6 +28,7 @@ app.use('/users', userRouter)
 app.use('/products', productsRouter)
 app.use('/packages', packagesRouter)
 app.use('/billings', billingsRouter)
+app.use('/payment', paymentRouter)
 
 app.use((req, res, next) => {
   next(createError.NotFound());

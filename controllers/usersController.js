@@ -48,13 +48,6 @@ async function Login(req, res, next) {
         email: email,
      }
     });
-    let paymentStatus
-    if(user.balance>0&&user.validity_of_balance>0){
-      paymentStatus = 'balance ok';
-    }
-    else{
-      paymentStatus = 'insufficient balance'
-    }
 
     if (user.password) {
       const isValidPassword = await bcrypt.compare(
@@ -68,7 +61,6 @@ async function Login(req, res, next) {
           email: user.email,
           balance: user.balance,
           validity_of_balance: user.validity_of_balance,
-          paymentStatus
         };
         res.status(200).json({
           user: userObject,

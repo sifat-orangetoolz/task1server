@@ -15,11 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         balance: {
             type: DataTypes.DOUBLE,
-            allowNull: false,
         },
         validity_of_balance: {
-            type: DataTypes.DOUBLE,
-            allowNull: false,
+            type: DataTypes.DATE,
         }, 
     
     }, {

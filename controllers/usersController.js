@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const db = require('../models')
+const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 
 
@@ -62,8 +63,24 @@ async function Login(req, res, next) {
           balance: user.balance,
           validity_of_balance: user.validity_of_balance,
         };
+
+        const token = jwt.sign(
+          {
+            name: user.name,
+            email: user.email,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: '86400000',
+          }
+        );
+
+        // res.locals.balance = user.balance;
+        // res.locals.validity_of_balance = user.validity_of_balance;
+
         res.status(200).json({
           user: userObject,
+          token: token,
           message: "User Logged In successfully!",
         });
       } else {

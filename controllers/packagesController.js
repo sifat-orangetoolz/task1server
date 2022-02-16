@@ -20,8 +20,6 @@ async function getPackages(req, res, next) {
       let packages = await Package.findAll({})
       res.status(200).json(packages)
 
-      console.log(packages)
-
     } catch (error) {
       next(error);
     }

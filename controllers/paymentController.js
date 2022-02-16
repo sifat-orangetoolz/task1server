@@ -35,7 +35,16 @@ async function paymentIntentRechargePackage(req, res, next) {
         let user = await User.findOne({ where: { id: userId }});
         
         const newBalance = Number(user.balance) + Number(amount);
-        const newValidity = Number(user.validity_of_balance) + Number(validity);
+
+        let newValidity;
+        if(user.validity_of_balance === null){
+          let date = new Date();
+           newValidity = date.setDate(date.getDate() + Number(validity));
+        }
+        else{
+            const existingDate = new Date(user.validity_of_balance)
+            newValidity = new Date(existingDate.setDate(existingDate.getDate() + Number(validity)));
+        }
         
 
         const updatedBalance = await User.update({

@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { addPackage, getPackages } = require('../controllers/packagesController');
+const { packageValidation } = require('../validators/packageValidator/packageValidator');
 
 router.get('/getPackages', getPackages)
 
-router.post('/addPackage', addPackage)
+router.post('/addPackage', packageValidation, addPackage)
 
 
 

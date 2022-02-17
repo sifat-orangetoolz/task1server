@@ -4,7 +4,6 @@ const createError = require('http-errors');
 const morgan = require('morgan');
 const cors = require("cors");
 require('dotenv').config();
-const localStorage = require("localStorage");
 
 const app = express();
 app.use(express.json());
@@ -22,8 +21,8 @@ const paymentRouter = require('./routers/paymentRouter');
 const { checkAuth } = require('./middlewares/checkAuth');
 
 
-app.get('/', checkAuth, async (req, res, next) => {
-  res.send({ message: 'Awesome it works 🐻' });
+app.get('/', checkAuth, async(req, res, next) => {
+  res.json({ message: 'Awesome it works 🐻' });
 });
 
 app.use('/users', userRouter)

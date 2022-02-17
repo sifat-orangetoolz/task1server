@@ -17,8 +17,13 @@ async function addPackage(req, res, next) {
 
 async function getPackages(req, res, next) {
     try {
+      let { balance } = req.user;
+      console.log(req.user)
       let packages = await Package.findAll({})
-      res.status(200).json(packages)
+      res.status(200).json({
+        data: packages,
+        userBalance: balance 
+      })
 
     } catch (error) {
       next(error);

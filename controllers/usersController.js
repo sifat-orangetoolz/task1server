@@ -13,7 +13,8 @@ const Billing = db.billings
 //Registration of o new user
 async function getUserById(req, res, next) {
     try {
-      const { id } = req.params;
+      const { id } = req.user;
+      console.log(typeof(id))
       let user = await User.findOne({where: {id: id}})
       res.status(200).json(user) 
     } catch (error) {
@@ -67,8 +68,9 @@ async function Login(req, res, next) {
         const token = jwt.sign(
           {
             id: user.id,
-            name: user.name,
             email: user.email,
+            balance: user.balance,
+            validity_of_balance: user.validity_of_balance
           },
           process.env.JWT_SECRET,
           {
@@ -93,14 +95,14 @@ async function Login(req, res, next) {
 
 async function getUserBilling(req, res, next){
   try {
-    const { userId } = req.params;
+    const { id } = req.user;
     
     const data = await User.findOne({
       include: [{
           model: Billing,
           as: 'billing'
       }],
-      where: { id: Number(userId) }
+      where: { id: id }
   })
 
   res.status(200).send(data);

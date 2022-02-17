@@ -1,13 +1,9 @@
-const db = require('../models');
-const User = db.users;
-
-
-async function statusCheck(req, res, next){
+function statusCheck(req, res, next){
     try {
-        const { id } = req.params;
+        const { id, balance, validity_of_balance } = req.user;
         let date = new Date();
-        const user = await User.findOne({where: {id: id}})
-        if(user.balance !==null && user.balance>=100 && ((new Date(user.validity_of_balance)).getTime()>=date.getTime())&&user.validity_of_balance!==null){
+        // const user = await User.findOne({where: {id: id}})
+        if(balance !==null && balance>=100 && ((new Date(validity_of_balance)).getTime()>=date.getTime())&&validity_of_balance!==null){
             next();
         }
         else{

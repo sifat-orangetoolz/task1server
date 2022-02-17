@@ -22,10 +22,12 @@ async function addProduct(req, res, next) {
 
 async function getProducts(req, res, next) {
     try {
+      const { balance } = req.user;
       let products = await Product.findAll({})
-      res.status(200).json(products)
-
-      console.log(products)
+      res.status(200).json({
+        data: products,
+        balance: balance
+      })
 
     } catch (error) {
       next(error);

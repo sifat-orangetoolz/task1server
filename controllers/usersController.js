@@ -56,16 +56,17 @@ async function Login(req, res, next) {
         user.password
       );
       if (isValidPassword) {
-        const userObject = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          balance: user.balance,
-          validity_of_balance: user.validity_of_balance,
-        };
+        // const userObject = {
+        //   id: user.id,
+        //   name: user.name,
+        //   email: user.email,
+        //   balance: user.balance,
+        //   validity_of_balance: user.validity_of_balance,
+        // };
 
         const token = jwt.sign(
           {
+            id: user.id,
             name: user.name,
             email: user.email,
           },
@@ -75,11 +76,7 @@ async function Login(req, res, next) {
           }
         );
 
-        // res.locals.balance = user.balance;
-        // res.locals.validity_of_balance = user.validity_of_balance;
-
         res.status(200).json({
-          user: userObject,
           token: token,
           message: "User Logged In successfully!",
         });

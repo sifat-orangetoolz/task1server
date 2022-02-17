@@ -20,6 +20,7 @@
     "http-errors": "^2.0.0",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "localStorage": "^1.0.4",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",

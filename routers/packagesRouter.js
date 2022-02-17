@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const { addPackage, getPackages } = require('../controllers/packagesController');
+const { checkAuth } = require('../middlewares/checkAuth');
 const { packageValidation } = require('../validators/packageValidator/packageValidator');
 
-router.get('/getPackages', getPackages)
+router.get('/getPackages/:id', checkAuth, getPackages)
 
 router.post('/addPackage', packageValidation, addPackage)
 

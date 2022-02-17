@@ -19,9 +19,10 @@ const productsRouter = require('./routers/productsRouter');
 const packagesRouter = require('./routers/packagesRouter');
 const billingsRouter = require('./routers/billingsRouter');
 const paymentRouter = require('./routers/paymentRouter');
+const { checkAuth } = require('./middlewares/checkAuth');
 
 
-app.get('/', async (req, res, next) => {
+app.get('/', checkAuth, async (req, res, next) => {
   res.send({ message: 'Awesome it works 🐻' });
 });
 

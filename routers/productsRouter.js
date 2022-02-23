@@ -7,7 +7,7 @@ const { productValidation } = require('../validators/productValidator/productVal
 router.get('/allProducts/', checkAuth, statusCheck, getProducts)
 
 router.post('/addProduct', productValidation, addProduct)
-router.post('/buyProduct', buyProduct)
+router.post('/buyProduct', checkAuth, statusCheck, buyProduct)
 
 
 

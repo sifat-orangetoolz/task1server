@@ -22,11 +22,17 @@ async function addProduct(req, res, next) {
 
 async function getProducts(req, res, next) {
     try {
-      const { balance } = req.user;
+      const { id } = req.user;
       let products = await Product.findAll({})
+
+      const user = await User.findOne({
+        where: id
+
+      })
       res.status(200).json({
         data: products,
-        balance: balance
+        balance: user.balance,
+        userId: id
       })
 
     } catch (error) {
@@ -34,29 +40,39 @@ async function getProducts(req, res, next) {
     }
   }
 
-  async function buyProduct(req, res, next) {
+async function buyProduct(req, res, next) {
     try {
-      const { user_id, amount } = req.body;
-      let user = await User.findOne({where: {id: user_id}})
-      if(user.balance < amount ){
+      const { product_id, description, amount } = req.body;
+
+      const { id } = req.user;
+      console.log(id)
+      let user = await User.findOne({where: {id}})
+      if(user.balance < Number(amount) ){
         res.status(400).json({
           message: "Insufficient Balance"
         })
         
       }
       else{
-          let billing = Billing.create(req.body)
+          let billing = Billing.create({
+            amount,
+            description,
+            user_id: id,
+            product_id
 
-          let user = await User.findOne({where: {id: user_id}})
+          })
+
+          let user = await User.findOne({where: {id: id}})
     
-          const newBalance = Number(user.balance) - Number(amount);     
+          const newBalance = Number(user.balance) - Number(amount); 
+          console.log(newBalance)    
     
           const updatedBalance = await User.update({
               balance: newBalance,   
           },
           {
               where: {
-                  id: Number(user_id)
+                  id: Number(id)
               }
           }    
           );  

@@ -10,8 +10,11 @@ const User = db.users
 //Payment for Recharge package
 async function paymentIntentRechargePackage(req, res, next) {
     try {
-        let { packageId, userId, amount, id, title, validity } = req.body;
+        let { packageId, amount, id, title, validity } = req.body;
+        console.log('.................................')
         console.log(req.body)
+        console.log('.................................')
+        console.log(req.user)
         try {
           const payment = await stripe.paymentIntents.create({
             amount: Number(amount)*100,
@@ -21,18 +24,19 @@ async function paymentIntentRechargePackage(req, res, next) {
             confirm: true,
           });
 
+          console.log(payment)
 
 
           const billingToBeAdded = await Billing.create({
             amount: amount,
             description: title,
-            user_id: Number(userId),
-            package_id: Number(packageId)
+            user_id: req.user.id,
+            package_id: packageId
             
         });
 
-        // console.log(billingToBeAdded)
-        let user = await User.findOne({ where: { id: userId }});
+        console.log(billingToBeAdded)
+        let user = await User.findOne({ where: { id: req.user.id }});
         
         const newBalance = Number(user.balance) + Number(amount);
 
@@ -53,7 +57,7 @@ async function paymentIntentRechargePackage(req, res, next) {
         },
         {
             where: {
-                id: Number(userId)
+                id: Number(req.user.id )
             }
         }    
         );
